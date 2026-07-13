@@ -1,0 +1,19 @@
+# Local dependencies for LedgerFlow: SQL Server for the exception queue and Azurite for blob/queue.
+# The Azure services (Document Intelligence, Service Bus) have no local emulator and are stubbed at
+# their interfaces in tests. Bring these up for running the API against a real database:
+#   docker compose up -d
+services:
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Your_strong_Pass123"
+    ports:
+      - "1433:1433"
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    command: "azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0"
+    ports:
+      - "10000:10000"
+      - "10001:10001"

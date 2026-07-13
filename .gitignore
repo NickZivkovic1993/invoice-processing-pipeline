@@ -1,4 +1,16 @@
-# nothing to build — static site
+# .NET
+bin/
+obj/
+*.user
+
+# Azure Functions local settings (secrets)
+local.settings.json
+
+# Node / web
+node_modules/
+web/dist/
+
+# Editors / OS
 .DS_Store
 Thumbs.db
 *.log

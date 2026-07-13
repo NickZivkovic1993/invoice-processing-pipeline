@@ -1,45 +1,88 @@
 # LedgerFlow — Invoice Processing Pipeline
 
-A front-end **UI concept** for an automated invoice-processing platform: capture
-supplier invoices, extract their fields with Azure AI Document Intelligence,
-validate them against purchase orders, and post the clean ones straight to the
-ERP — leaving only exceptions for a human to review.
+[![CI](https://github.com/NickZivkovic1993/invoice-processing-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/NickZivkovic1993/invoice-processing-pipeline/actions/workflows/ci.yml)
 
-> ⚠️ **Demo / mockup only.** This is a static, self-contained interface with
-> illustrative data. There is no backend, no real document processing, and the
-> numbers are fictional. It exists to show the shape of the product.
+An automated accounts-payable pipeline on Azure: supplier invoices are captured, read with
+**Azure AI Document Intelligence**, reconciled against purchase orders and goods receipts by a
+**three-way match**, and either posted straight to the ERP or held in a review queue for a human.
+Everything inside tolerance flows through without manual typing; only exceptions surface.
 
-## Screens
+> **Reference implementation.** This is real, working engineering written to demonstrate the
+> architecture — not a client deliverable. The customer scenario and all figures are illustrative;
+> the code, tests, and infrastructure are not. Processing live documents needs your own Azure
+> resources (see [Configuration](#configuration)).
 
-| Page | What it shows |
-| ---- | ------------- |
-| `index.html` | Executive dashboard — KPIs, live pipeline stages, throughput, outcomes, activity feed |
-| `queue.html` | Exception review queue with a side-by-side document / extracted-fields panel |
-| `analytics.html` | Straight-through-processing trends, exception reasons, supplier volumes, reconciliation summary |
+## Architecture
 
-## Concept
-
-- **Capture** — invoices arrive from a monitored mailbox or upload and land on a queue
-- **Extract** — Azure AI Document Intelligence reads header + line-item fields, extended with custom fields
-- **Validate** — 3-way match against open purchase orders and supplier master data
-- **Post** — anything within tolerance posts to the ERP automatically; the rest is held for review
-- **Learn** — every human correction feeds back into extraction accuracy
-
-## Running it
-
-It's plain HTML/CSS/JS — no build, no dependencies. Just open `index.html`,
-or serve the folder:
-
-```bash
-python -m http.server 8080
-# then visit http://localhost:8080
+```
+   mailbox / upload
+        │  (drops a PDF in blob storage)
+        ▼
+  ┌────────────────┐   Service Bus    ┌────────────────────┐
+  │ CaptureFunction │ ───────────────▶ │ ProcessInvoiceFunc │
+  │  (blob trigger) │   invoices-in    │  (queue trigger)   │
+  └────────────────┘                  └─────────┬──────────┘
+                                                │  extract (Document Intelligence)
+                                                ▼
+                                      ┌────────────────────┐
+                                      │   ThreeWayMatcher   │  invoice × PO × receipts
+                                      └─────────┬──────────┘
+                                   auto-post ◀──┴──▶ exception queue (Azure SQL)
+                                      │                     │
+                                   ERP API            LedgerFlow.Api  ◀── React review UI
 ```
 
-## Stack (as pictured)
+The **three-way match** is the heart of the system and lives in
+[`LedgerFlow.Core`](src/LedgerFlow.Core/Matching/ThreeWayMatcher.cs) — pure, dependency-free, and
+covered by [unit tests](tests/LedgerFlow.Core.Tests/ThreeWayMatcherTests.cs). Every Azure boundary
+(document extraction, messaging, ERP, reference data) sits behind an interface so the domain stays
+testable and the cloud stays out of the core.
 
-`Azure AI Document Intelligence` · `Azure Functions (.NET 8)` · `Azure Service Bus`
-· `Azure SQL` · static HTML/CSS/vanilla JS front-end · inline-SVG charts
+## Projects
+
+| Project | Role |
+| ------- | ---- |
+| `LedgerFlow.Core` | Domain model + three-way matcher and tolerance rules. No I/O. |
+| `LedgerFlow.Infrastructure` | EF Core (Azure SQL), Document Intelligence extractor, Service Bus, ERP + reference-data clients. |
+| `LedgerFlow.Functions` | Isolated-worker Functions: blob capture → Service Bus → extract → match → post. |
+| `LedgerFlow.Api` | Minimal API backing the exception queue (list / approve / reject). |
+| `web/` | React + TypeScript + Vite review-queue UI. |
+| `infra/` | Bicep for the whole estate; managed identity throughout, no secrets in app settings. |
+
+## Build & test
+
+```bash
+dotnet test LedgerFlow.sln      # domain + matcher tests
+cd web && npm ci && npm run build
+```
+
+Both run in [CI](.github/workflows/ci.yml) on every push, along with `az bicep build` over the
+infrastructure.
+
+## Run locally
+
+```bash
+docker compose up -d                       # SQL Server + Azurite
+dotnet run --project src/LedgerFlow.Api    # exception-queue API on :5080
+cd web && npm run dev                      # review UI on :5173, proxied to the API
+```
+
+The Functions worker and live extraction need real Azure resources — see below.
+
+## Configuration
+
+`LedgerFlow.Functions` reads (via managed identity in Azure, `local.settings.json` locally):
+
+| Setting | Purpose |
+| ------- | ------- |
+| `DocumentIntelligenceEndpoint` | Azure AI Document Intelligence resource URL |
+| `ServiceBusConnection` | Service Bus namespace |
+| `BlobServiceUri` | Storage account for the invoice inbox |
+| `SqlConnectionString` | Azure SQL exception-queue database |
+| `ErpBaseUrl` | ERP posting + reference-data API |
+
+Provision everything with `az deployment group create -g <rg> -f infra/main.bicep`.
 
 ---
 
-Built as a portfolio interface concept. Design and code by Nick Zivkovic.
+Design and code by Nick Zivkovic.
