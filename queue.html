@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Review Queue — LedgerFlow</title>
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M10 12h6M10 16h6M10 8h3"/></svg></div>
+        <div><div class="name">LedgerFlow</div><div class="sub">Invoice Pipeline</div></div>
+      </div>
+      <div class="nav-label">Workspace</div>
+      <a class="nav-item" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Dashboard</a>
+      <a class="nav-item active" href="queue.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg> Review Queue <span class="badge">18</span></a>
+      <a class="nav-item" href="analytics.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg> Analytics</a>
+      <a class="nav-item" href="#" data-noop><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg> Approvals <span class="badge">4</span></a>
+      <div class="nav-label">Configure</div>
+      <a class="nav-item" href="#" data-noop><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4zM4 12h10v8H4zM18 12h2v8h-2z"/></svg> Extraction Models</a>
+      <a class="nav-item" href="#" data-noop><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a7.97 7.97 0 0 0 0-6l2-1.5-2-3.5-2.4 1a8 8 0 0 0-1.7-1L14.5 0h-4l-.3 4a8 8 0 0 0-1.7 1L6.1 4l-2 3.5L6 9a8 8 0 0 0 0 6l-2 1.5 2 3.5 2.4-1a8 8 0 0 0 1.7 1l.3 4h4l.3-4a8 8 0 0 0 1.7-1l2.4 1 2-3.5z"/></svg> Settings</a>
+      <div class="spacer"></div>
+      <div class="side-card"><b>Tolerance policy</b><br />Auto-post ≤ 2% PO variance<br /><span class="badge-s info" style="margin-top:8px"><span class="d"></span> 3-way match on</span></div>
+    </aside>
+
+    <div class="main">
+      <header class="header">
+        <span class="page-title">Review Queue</span>
+        <span class="crumb">/ Exceptions</span>
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input placeholder="Filter this queue…" /></div>
+        <button class="icon-btn"><span class="dot"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></button>
+        <div class="avatar">NZ</div>
+      </header>
+
+      <main class="content">
+        <div class="page-head">
+          <div class="rise"><h1>Review Queue</h1><p>Documents held for a human decision — low confidence, a failed match, or a policy flag. Everything else posts automatically.</p></div>
+          <div class="head-actions rise"><button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.5V19l4 2v-8.5z"/></svg> Filters</button><button class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Approve selected</button></div>
+        </div>
+
+        <div class="grid cols-4" style="margin-bottom:18px">
+          <div class="card kpi rise"><div class="top">Awaiting review</div><div class="val" style="font-size:26px"><span data-count="18">18</span></div><div class="delta"><span class="muted">avg wait 12m</span></div></div>
+          <div class="card kpi rise-2"><div class="top">Low confidence</div><div class="val" style="font-size:26px;color:var(--warn)"><span data-count="9">9</span></div><div class="delta"><span class="muted">&lt; 80% extraction</span></div></div>
+          <div class="card kpi rise-3"><div class="top">No PO match</div><div class="val" style="font-size:26px;color:var(--bad)"><span data-count="6">6</span></div><div class="delta"><span class="muted">3-way failed</span></div></div>
+          <div class="card kpi rise-4"><div class="top">Possible duplicate</div><div class="val" style="font-size:26px;color:var(--info)"><span data-count="3">3</span></div><div class="delta"><span class="muted">fuzzy matched</span></div></div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 1.35fr 1fr; align-items:start">
+          <!-- Queue table -->
+          <div class="card rise">
+            <div class="card-head">
+              <div><h3>Held documents</h3><span class="sub">Sorted by priority</span></div>
+              <div class="tabs" data-tabs><button class="active">All</button><button>Low conf.</button><button>No match</button></div>
+            </div>
+            <div class="table-wrap">
+              <table class="data">
+                <thead><tr><th></th><th>Invoice</th><th class="right">Amount</th><th>Flag</th><th>Conf.</th></tr></thead>
+                <tbody>
+                  <tr style="background:var(--panel)">
+                    <td><input type="checkbox" checked /></td>
+                    <td><span class="mono">INV-88212</span><div class="cell-sub">Meridian Print Ltd</div></td>
+                    <td class="right amt">€2,140.55</td>
+                    <td><span class="badge-s warn"><span class="d"></span> Over tolerance</span></td>
+                    <td><span class="conf"><span class="bar"><span style="width:74%;background:#fbbf24"></span></span><span class="num">74%</span></span></td>
+                  </tr>
+                  <tr><td><input type="checkbox" /></td><td><span class="mono">INV-88208</span><div class="cell-sub">Quantex Logistics</div></td><td class="right amt">€5,320.00</td><td><span class="badge-s bad"><span class="d"></span> No PO match</span></td><td><span class="conf"><span class="bar"><span style="width:61%;background:#f87171"></span></span><span class="num">61%</span></span></td></tr>
+                  <tr><td><input type="checkbox" /></td><td><span class="mono">INV-88197</span><div class="cell-sub">Delta Materials</div></td><td class="right amt">€940.00</td><td><span class="badge-s info"><span class="d"></span> Duplicate?</span></td><td><span class="conf"><span class="bar"><span style="width:82%;background:#34d399"></span></span><span class="num">82%</span></span></td></tr>
+                  <tr><td><input type="checkbox" /></td><td><span class="mono">INV-88191</span><div class="cell-sub">Orion Tooling</div></td><td class="right amt">€14,120.00</td><td><span class="badge-s warn"><span class="d"></span> Low conf. total</span></td><td><span class="conf"><span class="bar"><span style="width:68%;background:#fbbf24"></span></span><span class="num">68%</span></span></td></tr>
+                  <tr><td><input type="checkbox" /></td><td><span class="mono">INV-88184</span><div class="cell-sub">Helix Chemicals</div></td><td class="right amt">€7,880.40</td><td><span class="badge-s bad"><span class="d"></span> No PO match</span></td><td><span class="conf"><span class="bar"><span style="width:59%;background:#f87171"></span></span><span class="num">59%</span></span></td></tr>
+                  <tr><td><input type="checkbox" /></td><td><span class="mono">INV-88180</span><div class="cell-sub">Cascade Freight</div></td><td class="right amt">€2,015.00</td><td><span class="badge-s warn"><span class="d"></span> Missing tax ID</span></td><td><span class="conf"><span class="bar"><span style="width:77%;background:#fbbf24"></span></span><span class="num">77%</span></span></td></tr>
+                  <tr><td><input type="checkbox" /></td><td><span class="mono">INV-88176</span><div class="cell-sub">Northwind Paper</div></td><td class="right amt">€612.30</td><td><span class="badge-s info"><span class="d"></span> Duplicate?</span></td><td><span class="conf"><span class="bar"><span style="width:85%;background:#34d399"></span></span><span class="num">85%</span></span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Review panel -->
+          <div class="card rise-2">
+            <div class="card-head">
+              <div><h3>INV-88212</h3><span class="sub">Meridian Print Ltd · received 09:07</span></div>
+              <span class="badge-s warn"><span class="d"></span> Over tolerance</span>
+            </div>
+
+            <!-- Fake document preview -->
+            <div style="border:1px solid var(--border);border-radius:10px;background:#0e1017;padding:18px;margin-bottom:16px">
+              <div class="flex between items-center" style="margin-bottom:14px">
+                <div style="font-weight:700;font-size:15px">MERIDIAN PRINT LTD</div>
+                <div class="faint mono" style="font-size:11px">INVOICE</div>
+              </div>
+              <div class="flex between" style="font-size:11.5px;color:var(--text-dim);margin-bottom:14px">
+                <div>14 Foundry Rd<br/>Manchester, M4 1LZ<br/>VAT GB 428 1192 03</div>
+                <div class="right">Invoice # 2026-1187<br/>Date 12 Jul 2026<br/>Terms Net 30</div>
+              </div>
+              <div style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:10px 0;font-size:12px">
+                <div class="flex between"><span>Digital print run — 5,000 units</span><span class="mono">€1,780.00</span></div>
+                <div class="flex between" style="margin-top:6px"><span>Finishing &amp; binding</span><span class="mono">€360.55</span></div>
+              </div>
+              <div class="flex between" style="margin-top:12px;font-weight:700;font-size:15px">
+                <span>Total</span><span class="mono" style="outline:2px solid var(--warn);outline-offset:3px;border-radius:3px">€2,140.55</span>
+              </div>
+            </div>
+
+            <!-- Extracted fields -->
+            <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Extracted fields</div>
+            <div class="feed">
+              <div class="flex between" style="padding:8px 0;border-bottom:1px solid var(--border-soft)"><span class="faint">Supplier</span><span>Meridian Print Ltd <span class="badge-s good" style="margin-left:6px"><span class="d"></span> 99%</span></span></div>
+              <div class="flex between" style="padding:8px 0;border-bottom:1px solid var(--border-soft)"><span class="faint">Invoice #</span><span class="mono">2026-1187 <span class="badge-s good" style="margin-left:6px"><span class="d"></span> 97%</span></span></div>
+              <div class="flex between" style="padding:8px 0;border-bottom:1px solid var(--border-soft)"><span class="faint">PO reference</span><span class="mono">PO-40918</span></div>
+              <div class="flex between" style="padding:8px 0;border-bottom:1px solid var(--border-soft)"><span class="faint">Total</span><span class="mono">€2,140.55 <span class="badge-s warn" style="margin-left:6px"><span class="d"></span> 74%</span></span></div>
+              <div class="flex between" style="padding:8px 0"><span class="faint">PO amount</span><span class="mono">€2,050.00 <span class="badge-s bad" style="margin-left:6px"><span class="d"></span> +4.4%</span></span></div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="flex gap-8">
+              <button class="btn primary" style="flex:1;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Approve &amp; post</button>
+              <button class="btn" style="flex:1;justify-content:center">Edit fields</button>
+              <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <p class="dl-note">LedgerFlow · demo interface · figures are illustrative</p>
+      </main>
+    </div>
+  </div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

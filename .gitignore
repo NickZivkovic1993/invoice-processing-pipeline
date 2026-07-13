@@ -1,0 +1,6 @@
+# nothing to build — static site
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

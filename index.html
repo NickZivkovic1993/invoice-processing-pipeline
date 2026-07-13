@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LedgerFlow — Invoice Automation</title>
+  <meta name="description" content="LedgerFlow — automated invoice capture, extraction, and reconciliation on Azure Document Intelligence." />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M10 12h6M10 16h6M10 8h3"/></svg>
+        </div>
+        <div>
+          <div class="name">LedgerFlow</div>
+          <div class="sub">Invoice Pipeline</div>
+        </div>
+      </div>
+
+      <div class="nav-label">Workspace</div>
+      <a class="nav-item active" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item" href="queue.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        Review Queue <span class="badge">18</span>
+      </a>
+      <a class="nav-item" href="analytics.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
+        Analytics
+      </a>
+      <a class="nav-item" href="#" data-noop>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L9 18l-5-5"/></svg>
+        Approvals <span class="badge">4</span>
+      </a>
+
+      <div class="nav-label">Configure</div>
+      <a class="nav-item" href="#" data-noop>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4zM4 12h10v8H4zM18 12h2v8h-2z"/></svg>
+        Extraction Models
+      </a>
+      <a class="nav-item" href="#" data-noop>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.5-2.4 1a7 7 0 0 0-1.7-1L16.5 3h-4l-.3 2.5a7 7 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 1.7 1l.3 2.5h4l.3-2.5a7 7 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5a7 7 0 0 0 .1-1z"/></svg>
+        Settings
+      </a>
+
+      <div class="spacer"></div>
+      <div class="side-card">
+        <b>Azure Document Intelligence</b><br />
+        Prebuilt invoice model · 6 custom fields<br />
+        <span class="badge-s good" style="margin-top:8px"><span class="d"></span> Healthy · 99.98% uptime</span>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="header">
+        <span class="page-title">Dashboard</span>
+        <span class="crumb">/ Overview</span>
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <input placeholder="Search invoices, suppliers, POs…" />
+        </div>
+        <button class="icon-btn"><span class="dot"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        </button>
+        <div class="avatar">NZ</div>
+      </header>
+
+      <main class="content">
+        <div class="page-head">
+          <div class="rise">
+            <h1>Good morning, Nick</h1>
+            <p>Here's how the invoice pipeline is running today — <span class="faint">Tuesday, 13 July 2026, 09:14 CET</span></p>
+          </div>
+          <div class="head-actions rise">
+            <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Export</button>
+            <button class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Upload invoices</button>
+          </div>
+        </div>
+
+        <!-- KPI row -->
+        <div class="grid cols-4" style="margin-bottom:18px">
+          <div class="card kpi rise">
+            <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h7l4 4v14H7z"/><path d="M10 12h6M10 16h4"/></svg></span> Processed this month</div>
+            <div class="val"><span data-count="4127" data-live>4,127</span></div>
+            <div class="delta up">▲ 12.4% <span class="muted">vs June</span></div>
+            <svg class="spark" data-line="20,26,24,30,28,36,34,42,40,48,52,60" data-stroke="#34d399"></svg>
+          </div>
+          <div class="card kpi rise-2">
+            <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></span> Straight-through rate</div>
+            <div class="val"><span data-count="90.3" data-decimals="1" data-suffix="%">90.3%</span></div>
+            <div class="delta up">▲ 3.1 pts <span class="muted">vs June</span></div>
+            <svg class="spark" data-line="70,74,72,78,80,82,85,84,88,89,90,90" data-stroke="#6366f1"></svg>
+          </div>
+          <div class="card kpi rise-3">
+            <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span> Avg. handling time</div>
+            <div class="val"><span data-count="41" data-suffix="s">41s</span></div>
+            <div class="delta up">▲ 68% faster <span class="muted">vs manual</span></div>
+            <svg class="spark" data-line="90,84,80,70,64,58,52,48,46,44,42,41" data-stroke="#38bdf8"></svg>
+          </div>
+          <div class="card kpi rise-4">
+            <div class="top"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Value reconciled</div>
+            <div class="val"><span data-count="8.42" data-decimals="2" data-prefix="€" data-suffix="M">€8.42M</span></div>
+            <div class="delta up">▲ 9.7% <span class="muted">vs June</span></div>
+            <svg class="spark" data-line="30,34,40,38,46,50,54,58,62,68,72,80" data-stroke="#fbbf24"></svg>
+          </div>
+        </div>
+
+        <!-- Pipeline stages -->
+        <div class="card rise" style="margin-bottom:18px">
+          <div class="card-head">
+            <div><h3>Live pipeline</h3><span class="sub">Documents flowing through the last 24 hours</span></div>
+            <span class="badge-s good"><span class="d"></span> All stages healthy</span>
+          </div>
+          <div class="pipe">
+            <div class="stage"><div class="n">STAGE 01</div><div class="h">Ingested</div><div class="c" data-count="4310" data-live>4,310</div><div class="arrow">→</div></div>
+            <div class="stage"><div class="n">STAGE 02</div><div class="h">Extracted</div><div class="c" data-count="4298">4,298</div><div class="arrow">→</div></div>
+            <div class="stage"><div class="n">STAGE 03</div><div class="h">Validated</div><div class="c" data-count="4102">4,102</div><div class="arrow">→</div></div>
+            <div class="stage"><div class="n">STAGE 04</div><div class="h">Auto-posted</div><div class="c" data-count="3894">3,894</div><div class="arrow">→</div></div>
+            <div class="stage"><div class="n">STAGE 05</div><div class="h">In review</div><div class="c" style="color:var(--warn)">18 <small>held</small></div></div>
+          </div>
+        </div>
+
+        <!-- Charts row -->
+        <div class="grid cols-3" style="margin-bottom:18px">
+          <div class="card span-2 rise">
+            <div class="card-head">
+              <div><h3>Throughput</h3><span class="sub">Invoices processed per day</span></div>
+              <div class="tabs" data-tabs>
+                <button class="active">14d</button><button>30d</button><button>QTD</button>
+              </div>
+            </div>
+            <svg class="chart-svg" style="height:210px" data-bars="180,220,240,190,260,300,280,310,290,340,360,330,380,420"
+              data-labels="Jun30,,Jul2,,Jul4,,Jul6,,Jul8,,Jul10,,Jul12," data-stroke="#6366f1"></svg>
+          </div>
+          <div class="card rise-2">
+            <div class="card-head"><div><h3>Outcomes</h3><span class="sub">This month</span></div></div>
+            <div class="flex items-center" style="justify-content:center">
+              <svg width="150" height="150" data-donut="3894,196,37" data-colors="#34d399,#fbbf24,#f87171" data-center="90%" data-sub="auto-posted"></svg>
+            </div>
+            <div class="legend" style="justify-content:center">
+              <span class="li"><span class="sw" style="background:#34d399"></span> Auto-posted</span>
+              <span class="li"><span class="sw" style="background:#fbbf24"></span> Reviewed</span>
+              <span class="li"><span class="sw" style="background:#f87171"></span> Rejected</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent + feed -->
+        <div class="grid cols-3">
+          <div class="card span-2 rise">
+            <div class="card-head">
+              <div><h3>Recent invoices</h3><span class="sub">Latest documents through the pipeline</span></div>
+              <a class="btn" href="queue.html">View queue</a>
+            </div>
+            <div class="table-wrap">
+              <table class="data">
+                <thead>
+                  <tr><th>Invoice</th><th>Supplier</th><th class="right">Amount</th><th>Confidence</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="mono">INV-88213</span><div class="cell-sub">PO-40921</div></td>
+                    <td><div class="who"><span class="avatar-sm" style="background:#6366f1">NC</span> Nordic Components AB</div></td>
+                    <td class="right amt">€12,480.00</td>
+                    <td><span class="conf"><span class="bar"><span style="width:98%;background:#34d399"></span></span><span class="num">98%</span></span></td>
+                    <td><span class="badge-s good"><span class="d"></span> Auto-posted</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="mono">INV-88212</span><div class="cell-sub">PO-40918</div></td>
+                    <td><div class="who"><span class="avatar-sm" style="background:#f59e0b">MP</span> Meridian Print Ltd</div></td>
+                    <td class="right amt">€2,140.55</td>
+                    <td><span class="conf"><span class="bar"><span style="width:74%;background:#fbbf24"></span></span><span class="num">74%</span></span></td>
+                    <td><span class="badge-s warn"><span class="d"></span> In review</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="mono">INV-88210</span><div class="cell-sub">PO-40915</div></td>
+                    <td><div class="who"><span class="avatar-sm" style="background:#10b981">GS</span> Greenfield Supplies</div></td>
+                    <td class="right amt">€860.00</td>
+                    <td><span class="conf"><span class="bar"><span style="width:96%;background:#34d399"></span></span><span class="num">96%</span></span></td>
+                    <td><span class="badge-s good"><span class="d"></span> Auto-posted</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="mono">INV-88208</span><div class="cell-sub">no PO match</div></td>
+                    <td><div class="who"><span class="avatar-sm" style="background:#ef4444">QX</span> Quantex Logistics</div></td>
+                    <td class="right amt">€5,320.00</td>
+                    <td><span class="conf"><span class="bar"><span style="width:61%;background:#f87171"></span></span><span class="num">61%</span></span></td>
+                    <td><span class="badge-s bad"><span class="d"></span> Exception</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="mono">INV-88205</span><div class="cell-sub">PO-40902</div></td>
+                    <td><div class="who"><span class="avatar-sm" style="background:#8b5cf6">AT</span> Atlas Freight Co.</div></td>
+                    <td class="right amt">€19,905.20</td>
+                    <td><span class="conf"><span class="bar"><span style="width:99%;background:#34d399"></span></span><span class="num">99%</span></span></td>
+                    <td><span class="badge-s good"><span class="d"></span> Auto-posted</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="mono">INV-88201</span><div class="cell-sub">PO-40899</div></td>
+                    <td><div class="who"><span class="avatar-sm" style="background:#06b6d4">BW</span> Baltic Warehousing</div></td>
+                    <td class="right amt">€3,275.00</td>
+                    <td><span class="conf"><span class="bar"><span style="width:88%;background:#34d399"></span></span><span class="num">88%</span></span></td>
+                    <td><span class="badge-s good"><span class="d"></span> Auto-posted</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card rise-2">
+            <div class="card-head"><div><h3>Activity</h3><span class="sub">Live event feed</span></div></div>
+            <div class="feed">
+              <div class="row"><div class="ic" style="background:var(--good-soft);color:var(--good)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><div><div class="t"><b>312 invoices</b> auto-posted to ERP</div><div class="time">2 minutes ago</div></div></div>
+              <div class="row"><div class="ic" style="background:var(--warn-soft);color:var(--warn)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div><div><div class="t"><b>INV-88212</b> held — amount over PO tolerance</div><div class="time">6 minutes ago</div></div></div>
+              <div class="row"><div class="ic" style="background:var(--accent-soft);color:var(--accent-2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/></svg></div><div><div class="t">Batch <b>#4821</b> ingested from mailbox</div><div class="time">14 minutes ago</div></div></div>
+              <div class="row"><div class="ic" style="background:var(--good-soft);color:var(--good)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div><div><div class="t"><b>K. Petrović</b> approved INV-88198</div><div class="time">22 minutes ago</div></div></div>
+              <div class="row"><div class="ic" style="background:var(--bad-soft);color:var(--bad)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></div><div><div class="t"><b>INV-88208</b> rejected — duplicate detected</div><div class="time">31 minutes ago</div></div></div>
+              <div class="row"><div class="ic" style="background:var(--accent-soft);color:var(--accent-2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div><div><div class="t">Extraction model retrained on <b>1,204</b> corrections</div><div class="time">1 hour ago</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="dl-note">LedgerFlow · demo interface · figures are illustrative</p>
+      </main>
+    </div>
+  </div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
