@@ -46,6 +46,11 @@ queue.MapPost("/{id:guid}/approve", (Guid id, ResolveRequest _, LedgerFlowDbCont
 queue.MapPost("/{id:guid}/reject", (Guid id, ResolveRequest _, LedgerFlowDbContext db) =>
     ResolveAsync(id, InvoiceStatus.Rejected, db));
 
+// Aggregate throughput and exception statistics for the analytics view. Defaults to 30 days.
+app.MapGet("/api/analytics", async (LedgerFlowDbContext db, int? days) =>
+    Results.Ok(await Analytics.ComputeAsync(db, DateTimeOffset.UtcNow.AddDays(-(days ?? 30)))))
+    .WithTags("Analytics");
+
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
 app.Run();

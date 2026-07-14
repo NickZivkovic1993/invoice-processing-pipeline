@@ -45,16 +45,23 @@ testable and the cloud stays out of the core.
 | `LedgerFlow.Core` | Domain model + three-way matcher and tolerance rules. No I/O. |
 | `LedgerFlow.Infrastructure` | EF Core (Azure SQL), Document Intelligence extractor, Service Bus, ERP + reference-data clients. |
 | `LedgerFlow.Functions` | Isolated-worker Functions: blob capture → Service Bus → extract → match → post. |
-| `LedgerFlow.Api` | Minimal API backing the exception queue (list / approve / reject). |
+| `LedgerFlow.Api` | Minimal API backing the exception queue (list / approve / reject) + `/api/analytics` aggregates. |
 | `web/` | React + TypeScript + Vite review-queue UI. |
 | `infra/` | Bicep for the whole estate; managed identity throughout, no secrets in app settings. |
 
 ## Build & test
 
 ```bash
-dotnet test LedgerFlow.sln      # domain + matcher tests
+dotnet test LedgerFlow.sln      # matcher + per-supplier policy + pipeline orchestration tests
 cd web && npm ci && npm run build
 ```
+
+The pipeline orchestration (extract → match → post-or-queue, including duplicate suppression) is
+covered end-to-end in
+[InvoiceProcessorTests](tests/LedgerFlow.Infrastructure.Tests/InvoiceProcessorTests.cs) against an
+in-memory database and a fake ERP. Per-supplier tolerance overrides live in
+[SupplierPolicies](src/LedgerFlow.Core/Matching/SupplierPolicies.cs) — a strategic partner can
+carry a looser price band while a repeat over-biller gets zero headroom.
 
 Both run in [CI](.github/workflows/ci.yml) on every push, along with `az bicep build` over the
 infrastructure.
