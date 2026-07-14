@@ -18,4 +18,8 @@
     <ProjectReference Include="..\LedgerFlow.Core\LedgerFlow.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="LedgerFlow.Infrastructure.Tests" />
+  </ItemGroup>
+
 </Project>
